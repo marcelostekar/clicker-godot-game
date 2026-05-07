@@ -1,0 +1,71 @@
+GDD - Documento de Diseño de Sistema: "The World Cult"
+1. Visión General del Proyecto
+Concepto Core: Un juego incremental estratégico donde el jugador encarna a un líder en las sombras buscando la dominación mundial. El crecimiento inicia lineal mediante interacción física (clicks) y escala hacia un sistema exponencial automatizado (idle).
+
+Plataformas de Despliegue: Dispositivos Móviles (Android/iOS) y PC (Steam).
+
+Motor Gráfico: Godot Engine.
+
+2. El Bucle de Ejecución (Core Gameplay Loop)
+El sistema se sostiene en un ciclo de cuatro fases que fomenta la optimización constante:
+
+Infección Manual: Interacción directa (Click) sobre nodos (países) de baja seguridad para generar la moneda base (Seguidores).
+
+Escalabilidad: Inversión de Seguidores en el Árbol de Habilidades para adquirir automatización y multiplicadores de crecimiento.
+
+Fricción del Entorno: Enfrentar las restricciones de seguridad impuestas por nodos de alto desarrollo (países del primer mundo).
+
+Reinicio Estratégico (Prestigio): Sacrificar la red actual para ganar moneda premium permanente y eludir los cortafuegos en la siguiente ejecución.
+
+3. Entidades y Mecánicas Principales
+3.1. Base de Datos (Los Países)
+El mundo está dividido en 195 nodos, cada uno con tres variables inmutables de base:
+
+Poblacion_Max (Capacidad total del nodo).
+
+Nivel_Seguridad (Probabilidad de que el gobierno detecte y mitigue la infección).
+
+Conquistado_Historico (Booleano utilizado para la economía de Prestigio).
+
+3.2. Gobernanza de Recursos (Árbol de Habilidades)
+El jugador gestiona el flujo de Seguidores invirtiendo en tres ramas tácticas:
+
+Rama de Fuerza Bruta: Aumenta el poder de convicción manual y los multiplicadores pasivos básicos.
+
+Rama de Propagación: Desbloquea vectores de transmisión (trenes, aviones, redes) para vulnerar nodos vecinos automáticamente.
+
+Rama de Invisibilidad: Protocolos de mitigación que reducen la probabilidad de ser detectados por el Nivel_Seguridad de los nodos desarrollados.
+
+3.3. Economía de Prestigio (High-Water Mark)
+Sistema de progresión finita y estricta para evitar el grinding repetitivo:
+
+Unidades máximas obtenibles: 195 Puntos.
+
+Condición de obtención: +1 Punto por cada país dominado al 100% por primera vez en la historia de la cuenta.
+
+Uso: Desbloquear ventajas base masivas (ej. vulnerar a países del primer mundo sin ser detectado desde el inicio).
+
+4. Arquitectura Visual y Game Feel
+Interfaz de Usuario (UI): Entorno minimalista y moderno centrado en un Modo Oscuro (Dark Theme) estricto. El mapa global domina la pantalla; los menús operativos se despliegan desde el margen inferior.
+
+Feedback de Interacción: Efecto visual tipo "Shader de Venas". La conquista no es un cambio de color plano, sino una inyección orgánica (violeta por defecto) que se ramifica de forma procedural a medida que el porcentaje de dominación del nodo aumenta.
+
+Cosméticos (Skins): Paletas de colores desbloqueables mediante progresión o prestigio (ej. infecciones rojo sangre o verde tóxico).
+
+5. Estructura de Monetización (Modelo No-Invasivo)
+El sistema no interrumpe el flujo del usuario. La monetización depende de la frustración matemática y la optimización del tiempo.
+
+Video Recompensado (Booster): Botón voluntario para aplicar un multiplicador x2 temporal a la producción global.
+
+Video Recompensado (Recolección Offline): Opción de duplicar los recursos generados mientras la aplicación estuvo cerrada.
+
+Video Recompensado (Mitigación de Daños): Salvavidas táctico para evitar que un nodo de alta seguridad borre el progreso local al ser detectado.
+
+6. Escalabilidad Futura (Roadmap)
+La arquitectura está diseñada para soportar expansiones de capa superior una vez que la base de jugadores agote los recursos del mundo.
+
+Fase 1 (Actual): World Conquer (Economía finita terrestre).
+
+Fase 2 (DLC / Expansión): Planet Conquer (La Tierra se comprime a un solo nodo de producción para financiar infraestructura interplanetaria en el Sistema Solar).
+
+Fase 3 (Endgame Absoluto): Universe Conquer (Generación procedural de nodos galácticos y escalabilidad matemática al infinito).

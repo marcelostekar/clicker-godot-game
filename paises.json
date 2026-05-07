@@ -1,0 +1,58 @@
+{
+  "argentina": {
+    "nombre": "Argentina",
+    "habitantes": 46000000,
+    "costo_conquista": 5000,
+    "produccion_pasiva": 80,
+    "dificultad": 0.8,
+    "descripcion": "Alta polarización social. Fácil de infiltrar mediante populismo digital."
+  },
+  "eeuu": {
+    "nombre": "Estados Unidos",
+    "habitantes": 333000000,
+    "costo_conquista": 500000,
+    "produccion_pasiva": 5000,
+    "dificultad": 3.5,
+    "descripcion": "Infraestructura masiva. Controlar este país otorga dominio sobre el tráfico de datos global."
+  },
+  "china": {
+    "nombre": "China",
+    "habitantes": 1412000000,
+    "costo_conquista": 850000,
+    "produccion_pasiva": 7500,
+    "dificultad": 4.2,
+    "descripcion": "Sistema de vigilancia avanzado. Requiere habilidades de 'Hacking Gubernamental' para entrar."
+  },
+  "india": {
+    "nombre": "India",
+    "habitantes": 1408000000,
+    "costo_conquista": 150000,
+    "produccion_pasiva": 2000,
+    "dificultad": 1.5,
+    "descripcion": "Población masiva. Ideal para granjas de bots y generación de influencia por volumen."
+  },
+  "noruega": {
+    "nombre": "Noruega",
+    "habitantes": 5400000,
+    "costo_conquista": 1200000,
+    "produccion_pasiva": 12000,
+    "dificultad": 5.0,
+    "descripcion": "Sociedad casi inmune. Solo conquistable con la mejora 'Utopía Distópica'."
+  },
+  "nigeria": {
+    "nombre": "Nigeria",
+    "habitantes": 213000000,
+    "costo_conquista": 12000,
+    "produccion_pasiva": 350,
+    "dificultad": 0.9,
+    "descripcion": "Crecimiento demográfico explosivo. El caos administrativo facilita la toma de poder."
+  },
+  "japon": {
+    "nombre": "Japón",
+    "habitantes": 125000000,
+    "costo_conquista": 400000,
+    "produccion_pasiva": 4500,
+    "dificultad": 3.8,
+    "descripcion": "Sociedad disciplinada y tecnológica. La infiltración debe ser sutil y cultural."
+  }
+}
