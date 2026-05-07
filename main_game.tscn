@@ -204,7 +204,4 @@ script = ExtResource("3_ykeeq")
 [connection signal="pressed" from="InterfazFija/PanelTienda/BotonCerrarTienda" to="." method="_on_boton_cerrar_tienda_pressed"]
 [connection signal="pressed" from="InterfazFija/BotonAbrirTienda" to="." method="_on_boton_abrir_tienda_pressed"]
 [connection signal="pressed" from="InterfazFija/Boton_Recargar_Energia" to="." method="_on_boton_recargar_energia_pressed"]
-[connection signal="pressed" from="MapaOceano/Pais_Argentina" to="." method="_on_pais_argentina_pressed" binds= ["argentina"]]
-[connection signal="pressed" from="MapaOceano/Pais_Brasil" to="." method="_on_pais_brasil_pressed" binds= ["brasil"]]
-[connection signal="pressed" from="MapaOceano/Pais_EEUU" to="." method="_on_pais_eeuu_pressed" binds= ["eeuu"]]
 [connection signal="timeout" from="TimerProduccion" to="." method="_on_timer_produccion_timeout"]
