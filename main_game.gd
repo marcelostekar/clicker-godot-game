@@ -23,17 +23,16 @@ func _ready():
 	$InterfazFija/ProgressBar.max_value = energia_maxima
 	$InterfazFija/ProgressBar.value = energia_actual
 
-func _process(delta):
-	# 1. Regenerar Energía
-	if energia_actual < energia_maxima:
-		energia_actual += regeneracion_energia_base * delta
-		$InterfazFija/ProgressBar.value = energia_actual
-	
-	# 2. Sumar Influencia Pasiva
-	influencia += influencia_por_segundo * delta
-	
-	# 3. Actualizar la etiqueta de puntos (Label)
-	$InterfazFija/Label.text = "Influencia: " + str(int(influencia))
+func _process(_delta):
+	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+		var mouse_pos: Vector2 = get_viewport().get_mouse_position()
+		var objeto_tocado = get_viewport().gui_get_focus_owner()
+		
+		if objeto_tocado:
+			print("DEBUG: Estás tocando el nodo: ", objeto_tocado.name)
+		else:
+			print("DEBUG: Click en: ", mouse_pos, " - No hay ningún Control con foco.")
+
 
 func cargar_paises():
 	if FileAccess.file_exists("res://paises.json"):
@@ -84,7 +83,17 @@ func _gui_input(event):
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			arrastrando = event.pressed
-			print("Clic en mapa: ", arrastrando) # Si esto no sale en consola, el Size está mal.
+		
+		# Zoom
+		if event.is_pressed():
+			if event.button_index == MOUSE_BUTTON_WHEEL_UP:
+				zoom_actual += Vector2(0.1, 0.1)
+			elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+				zoom_actual -= Vector2(0.1, 0.1)
+			zoom_actual = zoom_actual.clamp(Vector2(0.5, 0.5), Vector2(2.5, 2.5))
+			scale = zoom_actual
 
 	if event is InputEventMouseMotion and arrastrando:
+		# Esto mueve el mapa siguiendo el mouse
 		position += event.relative
+		

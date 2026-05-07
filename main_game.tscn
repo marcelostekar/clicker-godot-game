@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://brnl6hjt1ch2r"]
 
 [ext_resource type="Script" uid="uid://7o2pqu72rkx3" path="res://main_game.gd" id="1_1oj5k"]
-[ext_resource type="Script" uid="uid://c1oxgrw7bfrxt" path="res://mapa_habilidades.gd" id="2_yx7mw"]
 [ext_resource type="Script" uid="uid://d13xq1y52xeql" path="res://generador_data_gd.gd" id="3_ykeeq"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1oj5k"]
@@ -117,7 +116,6 @@ offset_right = 3000.0
 offset_bottom = 3000.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-script = ExtResource("2_yx7mw")
 
 [node name="BotonCerrarTienda" type="Button" parent="InterfazFija/PanelTienda" unique_id=452355564]
 custom_minimum_size = Vector2(20, 20)
