@@ -1,75 +1,61 @@
 extends Control
 
-var influencia = 0.0
+var influencia = 100.0
 var influencia_por_segundo = 0.0
 var energia_actual = 100.0
-var energia_maxima = 100.0
-var regeneracion_energia_base = 5.0
 var datos_paises = {}
-
-# Variables para el arrastre a la fuerza
-var arrastrando_mapa = false
-var mouse_inicio = Vector2.ZERO
-var pos_mapa_inicio = Vector2.ZERO
+var arrastrando = false
+var mouse_pos_ant = Vector2.ZERO
 
 func _ready():
+	print("SISTEMA: Reinicio total de nodos.")
 	cargar_paises()
-	if has_node("InterfazFija/BarraEnergia"):
-		$InterfazFija/BarraEnergia.max_value = energia_maxima
-		$InterfazFija/BarraEnergia.value = energia_actual
-	actualizar_ui_puntos()
+	# Forzamos que todos sean blancos al arrancar
+	if has_node("MapaOceano"):
+		for hijo in $MapaOceano.get_children():
+			if hijo is Control: hijo.self_modulate = Color(1,1,1)
 
 func _process(delta):
-	# 1. Economía
-	if energia_actual < energia_maxima:
-		energia_actual += regeneracion_energia_base * delta
-		if has_node("InterfazFija/BarraEnergia"):
-			$InterfazFija/BarraEnergia.value = energia_actual
-	
+	# Economía
 	influencia += influencia_por_segundo * delta
-	actualizar_ui_puntos()
-	
-	# 2. MOTOR DE MOVIMIENTO Y CLIC INSTANTÁNEO
-	var mouse_actual = get_viewport().get_mouse_position()
-	
+	var lbl = find_child("Label", true, false)
+	if lbl: lbl.text = "Puntos: " + str(int(influencia))
+
+	# Movimiento Directo
+	var mouse_pos = get_viewport().get_mouse_position()
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
-		if not arrastrando_mapa:
-			# EL MOMENTO DEL CLIC: Verificamos ni bien apretás
-			verificar_clic_pais_instantaneo(mouse_actual)
-			
-			arrastrando_mapa = true
-			mouse_inicio = mouse_actual
-			if has_node("MapaOceano"):
-				pos_mapa_inicio = $MapaOceano.position
+		if not arrastrando:
+			arrastrando = true
+			_chequear_clic_manual(mouse_pos)
 		else:
-			# Arrastre continuo
-			var diferencia = mouse_actual - mouse_inicio
+			var delta_mouse = mouse_pos - mouse_pos_ant
 			if has_node("MapaOceano"):
-				$MapaOceano.position = pos_mapa_inicio + diferencia
+				$MapaOceano.position += delta_mouse
+		mouse_pos_ant = mouse_pos
 	else:
-		arrastrando_mapa = false
+		arrastrando = false
+	mouse_pos_ant = mouse_pos
 
-# Detección por impacto directo (sin esperar a soltar)
-func verificar_clic_pais_instantaneo(pos_mouse):
-	# Usamos get_rect para ver si la posición global del mouse está dentro del botón
-	for pais in ["Pais_Argentina", "Pais_Brasil", "Pais_Eeuu"]:
-		var nodo_path = "MapaOceano/" + pais
-		if has_node(nodo_path):
-			var nodo = get_node(nodo_path)
-			if nodo.get_global_rect().has_point(pos_mouse):
-				var id = pais.replace("Pais_", "").to_lower()
-				_on_pais_clickeado(id)
-				# No procesamos más para que no se pisen si están cerca
-				return
+func _chequear_clic_manual(p):
+	if not has_node("MapaOceano"): return
+	for nodo in $MapaOceano.get_children():
+		if nodo is Control and nodo.name.begins_with("Pais"):
+			# Usamos la distancia al centro para evitar fallos de Rect
+			var centro = nodo.global_position + (nodo.size / 2)
+			if p.distance_to(centro) < 80: # Un radio de 80 píxeles
+				var id = nodo.name.split("_")[1].to_lower()
+				print("DEBUG: Detectado clic en ", id)
+				_abrir_panel(id)
 
-func _input(event):
-	if event is InputEventMouseButton and event.is_pressed():
-		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
-			if has_node("MapaOceano"):
-				$MapaOceano.scale *= 1.1
-		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
-			if has_node("MapaOceano"):
-				$MapaOceano.scale *= 0.9
+func _abrir_panel(id):
+	if datos_paises.has(id):
+		var p = find_child("PanelInfoPais", true, false)
+		if p:
+			p.set_meta("pais_id", id)
+			p.show()
+			# Forzamos que el panel se vea arriba de todo
+			p.z_index = 10
+			print("SISTEMA: Mostrando panel de ", id)
 
 func cargar_paises():
 	if FileAccess.file_exists("res://paises.json"):
@@ -79,31 +65,13 @@ func cargar_paises():
 			datos_paises = json.data
 		file.close()
 
-func actualizar_ui_puntos():
-	if has_node("InterfazFija/Label"):
-		$InterfazFija/Label.text = "Influencia: " + str(int(influencia))
-
-func _on_pais_clickeado(id_pais):
-	if datos_paises.has(id_pais):
-		var data = datos_paises[id_pais]
-		if has_node("InterfazFija/PanelInfoPais/TextoInfo"):
-			$InterfazFija/PanelInfoPais/TextoInfo.text = data["nombre"] + "\n\n" + data["descripcion"]
-			$InterfazFija/PanelInfoPais.set_meta("pais_id", id_pais) 
-			$InterfazFija/PanelInfoPais.show()
-
+# Conectá la señal del botón Conquistar a esto:
 func _on_boton_conquistar_pressed():
-	if has_node("InterfazFija/PanelInfoPais"):
-		var id = $InterfazFija/PanelInfoPais.get_meta("pais_id")
-		if datos_paises.has(id):
-			var data = datos_paises[id]
-			if influencia >= data["costo_conquista"]:
-				influencia -= data["costo_conquista"]
-				influencia_por_segundo += data["produccion_pasiva"]
-				
-				if has_node("MapaOceano"):
-					for nodo in $MapaOceano.get_children():
-						if nodo.name.to_lower().ends_with(id.to_lower()):
-							nodo.self_modulate = Color(1, 0, 0)
-				
-				$InterfazFija/PanelInfoPais.hide()
-				actualizar_ui_puntos()
+	var p = find_child("PanelInfoPais", true, false)
+	if p and p.has_meta("pais_id"):
+		var id = p.get_meta("pais_id")
+		influencia_por_segundo += 5
+		for nodo in $MapaOceano.get_children():
+			if nodo.name.to_lower().ends_with(id):
+				nodo.self_modulate = Color(1, 0, 0)
+		p.hide()

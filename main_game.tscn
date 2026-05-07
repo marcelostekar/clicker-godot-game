@@ -38,6 +38,7 @@ offset_right = 1101.0
 offset_bottom = 80.0
 
 [node name="PanelInfoPais" type="Panel" parent="InterfazFija" unique_id=405515864]
+z_index = 10
 offset_left = 86.0
 offset_top = 155.0
 offset_right = 312.0
