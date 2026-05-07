@@ -177,7 +177,7 @@ offset_right = 971.0
 offset_bottom = 1581.0
 text = "Brasil"
 
-[node name="Pais_EEUU" type="Button" parent="MapaOceano" unique_id=1239625252]
+[node name="Pais_Eeuu" type="Button" parent="MapaOceano" unique_id=1239625252]
 custom_minimum_size = Vector2(500, 500)
 layout_mode = 0
 offset_left = 347.0

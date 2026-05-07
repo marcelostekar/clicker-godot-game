@@ -50,12 +50,9 @@ func actualizar_ui_puntos():
 func _on_pais_clickeado(id_pais):
 	if datos_paises.has(id_pais):
 		var data = datos_paises[id_pais]
-		# Rellenamos el panel (Asegurate que estos nombres de nodos existan)
 		$InterfazFija/PanelInfoPais/TextoInfo.text = data["nombre"] + "\n\n" + data["descripcion"]
-		$InterfazFija/PanelInfoPais/CostoLabel.text = "Costo: " + str(data["costo_conquista"])
-		
-		# Guardamos el ID en el panel para el botón de compra
-		$InterfazFija/PanelInfoPais.set_meta("pais_id", id_id)
+# Cambié esto para que coincida con la variable que recibe la función
+		$InterfazFija/PanelInfoPais.set_meta("pais_id", id_pais) 
 		$InterfazFija/PanelInfoPais.show()
 
 # --- Función para el botón de Conquistar dentro del panel ---
@@ -66,8 +63,15 @@ func _on_boton_conquistar_pressed():
 	if influencia >= data["costo_conquista"]:
 		influencia -= data["costo_conquista"]
 		influencia_por_segundo += data["produccion_pasiva"]
-		print("Conquistaste " + data["nombre"])
+		
+		# --- SOLUCIÓN PARA LOS NOMBRES ---
+		# En lugar de adivinar mayúsculas, buscamos el nodo que CONTENGA el nombre
+		for nodo in $MapaOceano.get_children():
+			if nodo.name.to_lower().ends_with(id.to_lower()):
+				nodo.self_modulate = Color(1, 0, 0) # Lo pintamos de rojo furioso
+				print("Nodo encontrado y pintado: ", nodo.name)
+		
 		$InterfazFija/PanelInfoPais.hide()
-		# Aquí podrías cambiar el color del botón del país
+		actualizar_ui_puntos()
 	else:
-		print("Influencia insuficiente")
+		print("No te alcanza la influencia, seguí clickeando.")
