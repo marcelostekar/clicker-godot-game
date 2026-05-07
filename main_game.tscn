@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://brnl6hjt1ch2r"]
 
 [ext_resource type="Script" uid="uid://7o2pqu72rkx3" path="res://main_game.gd" id="1_1oj5k"]
-[ext_resource type="Script" uid="uid://d13xq1y52xeql" path="res://generador_data_gd.gd" id="3_ykeeq"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1oj5k"]
 bg_color = Color(0.37623972, 0.694621, 0.15032366, 1)
@@ -17,6 +16,7 @@ offset_right = 8.0
 offset_bottom = 8.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("1_1oj5k")
 
 [node name="Timer" type="Timer" parent="." unique_id=1345576124]
@@ -108,14 +108,19 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
+mouse_force_pass_scroll_events = false
 
 [node name="MapaHabilidades" type="Control" parent="InterfazFija/PanelTienda" unique_id=427974120]
 custom_minimum_size = Vector2(3000, 3000)
 anchors_preset = 0
-offset_right = 3000.0
-offset_bottom = 3000.0
+offset_left = -799.0
+offset_top = -696.0
+offset_right = 2201.0
+offset_bottom = 2304.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+mouse_filter = 2
 
 [node name="BotonCerrarTienda" type="Button" parent="InterfazFija/PanelTienda" unique_id=452355564]
 custom_minimum_size = Vector2(20, 20)
@@ -147,12 +152,13 @@ offset_bottom = 8.0
 text = "Recargar Energia"
 
 [node name="MapaOceano" type="ColorRect" parent="." unique_id=199045339]
-custom_minimum_size = Vector2(3000, 2000)
 layout_mode = 0
 offset_left = -810.0
 offset_top = -703.0
 offset_right = 2190.0
-offset_bottom = 1297.0
+offset_bottom = 2297.0
+mouse_filter = 2
+mouse_force_pass_scroll_events = false
 color = Color(1.2513996e-06, 0.00058144354, 0.30006412, 1)
 
 [node name="Pais_Argentina" type="Button" parent="MapaOceano" unique_id=152940125]
@@ -177,22 +183,16 @@ text = "Brasil"
 [node name="Pais_Eeuu" type="Button" parent="MapaOceano" unique_id=1239625252]
 custom_minimum_size = Vector2(500, 500)
 layout_mode = 0
-offset_left = 347.0
-offset_top = 346.0
-offset_right = 847.0
-offset_bottom = 846.0
+offset_left = 174.0
+offset_top = 263.0
+offset_right = 902.0
+offset_bottom = 896.0
 text = "EEUU"
-
-[node name="Camera2D" type="Camera2D" parent="." unique_id=1028927238]
-position = Vector2(563, 318)
-position_smoothing_enabled = true
-position_smoothing_speed = 120.0
 
 [node name="TimerProduccion" type="Timer" parent="." unique_id=1255013104]
 autostart = true
 
 [node name="generador_data_gd" type="Node" parent="." unique_id=821899905]
-script = ExtResource("3_ykeeq")
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="pressed" from="InterfazFija/PanelInfoPais/BotonCerrar" to="." method="_on_boton_cerrar_pressed"]
