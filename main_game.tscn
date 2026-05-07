@@ -155,7 +155,6 @@ offset_left = -810.0
 offset_top = -703.0
 offset_right = 2190.0
 offset_bottom = 1297.0
-mouse_filter = 2
 color = Color(1.2513996e-06, 0.00058144354, 0.30006412, 1)
 
 [node name="Pais_Argentina" type="Button" parent="MapaOceano" unique_id=152940125]

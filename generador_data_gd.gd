@@ -33,7 +33,7 @@ func generar_json_global():
 			"habitantes": int(pob * 1000000),
 			"costo_conquista": costo,
 			"produccion_pasiva": produccion,
-			"dificultad": stepify(idh * 5, 0.1),
+			"dificultad": snapped(idh * 5, 0.1),
 			"descripcion": "Nivel de desarrollo: " + str(idh)
 		}
 

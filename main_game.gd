@@ -1,4 +1,4 @@
-extends Node2D
+extends Control
 
 # Variables de Economía
 var influencia = 0.0
@@ -7,6 +7,10 @@ var energia_actual = 100.0
 var energia_maxima = 100.0
 var regeneracion_energia_base = 5.0
 var poder_click_actual = 1.0
+
+var arrastrando = false 
+
+var zoom_actual = Vector2(1, 1)
 
 # Almacenamiento de Datos
 var datos_paises = {}
@@ -75,3 +79,12 @@ func _on_boton_conquistar_pressed():
 		actualizar_ui_puntos()
 	else:
 		print("No te alcanza la influencia, seguí clickeando.")
+		
+func _gui_input(event):
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_LEFT:
+			arrastrando = event.pressed
+			print("Clic en mapa: ", arrastrando) # Si esto no sale en consola, el Size está mal.
+
+	if event is InputEventMouseMotion and arrastrando:
+		position += event.relative
